@@ -7,5 +7,5 @@ import lombok.Getter;
 @Getter
 public class UserJoinResponse {
     private String userName;
-    private String emailAddress;
+    private String email;
 }

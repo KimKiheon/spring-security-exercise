@@ -20,7 +20,7 @@ public class UserService {
         return UserDto.builder()
                 .id(savedUser.getId())
                 .userName(savedUser.getUserName())
-                .emailAddress(savedUser.getEmailAddress())
+                .email(savedUser.getEmailAddress())
                 .build();
     }
 }
