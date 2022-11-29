@@ -12,6 +12,10 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepository userRepository;
     public UserDto join(UserJoinRequest request){
+        userRepository.findByUserName(request.getUserName())
+                .ifPresent(user ->{
+                    throw new RuntimeException("UserName 중복");
+                });
         User savedUser = userRepository.save(request.toEntity());
         return UserDto.builder()
                 .id(savedUser.getId())
