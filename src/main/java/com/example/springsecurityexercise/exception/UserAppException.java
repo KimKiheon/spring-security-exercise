@@ -1,5 +1,8 @@
 package com.example.springsecurityexercise.exception;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 public class UserAppException extends RuntimeException {
     private ErrorCode errorCode;
     private String message;

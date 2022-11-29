@@ -2,6 +2,8 @@ package com.example.springsecurityexercise.controller;
 
 import com.example.springsecurityexercise.domain.dto.UserDto;
 import com.example.springsecurityexercise.domain.dto.UserJoinRequest;
+import com.example.springsecurityexercise.exception.ErrorCode;
+import com.example.springsecurityexercise.exception.UserAppException;
 import com.example.springsecurityexercise.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +34,7 @@ public class UserControllerTest {
     @DisplayName("회원가입 성공")
     void join_success() throws Exception {
         UserJoinRequest userJoinRequest = UserJoinRequest.builder()
-                .userName("kiheon")
+                .userName("kiheon11")
                 .password("1234")
                 .email("cbj2741@naver.com")
                 .build();
@@ -46,4 +48,22 @@ public class UserControllerTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    @DisplayName("회원가입 실패")
+    void join_fail() throws Exception {
+        UserJoinRequest userJoinRequest = UserJoinRequest.builder()
+                .userName("kiheon")
+                .password("1q2w3e4r")
+                .email("oceanfog1@gmail.com")
+                .build();
+
+        when(userService.join(any())).thenThrow(new UserAppException(ErrorCode.DUPLICATED_USER_NAME, ""));
+
+        mockMvc.perform(post("/api/v1/users/join")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(userJoinRequest)))
+                .andDo(print())
+                .andExpect(status().isConflict());
+    }
 }
+
