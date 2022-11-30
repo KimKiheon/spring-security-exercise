@@ -34,9 +34,11 @@ public class UserService {
     }
 
     public String login(String userName, String password) {
+        //userName이 존재 하는지
         User user = userRepository.findByUserName(userName).orElseThrow(
                 () -> new HospitalReviewAppException(ErrorCode.NOT_FOUND,
                         String.format("%s는 가입되지 않은 userName입니다")));
+        //password 일치 여부
         if (!encoder.matches(password, user.getPassword())) {
             throw new HospitalReviewAppException(ErrorCode.INVALID_PASSWORD, "password가 올바르지 않습니다");
         }
