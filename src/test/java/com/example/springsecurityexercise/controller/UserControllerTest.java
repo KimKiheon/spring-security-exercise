@@ -3,7 +3,7 @@ package com.example.springsecurityexercise.controller;
 import com.example.springsecurityexercise.domain.dto.UserDto;
 import com.example.springsecurityexercise.domain.dto.UserJoinRequest;
 import com.example.springsecurityexercise.exception.ErrorCode;
-import com.example.springsecurityexercise.exception.UserAppException;
+import com.example.springsecurityexercise.exception.HospitalReviewAppException;
 import com.example.springsecurityexercise.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -57,7 +57,7 @@ public class UserControllerTest {
                 .email("oceanfog1@gmail.com")
                 .build();
 
-        when(userService.join(any())).thenThrow(new UserAppException(ErrorCode.DUPLICATED_USER_NAME, ""));
+        when(userService.join(any())).thenThrow(new HospitalReviewAppException(ErrorCode.DUPLICATED_USER_NAME, ""));
 
         mockMvc.perform(post("/api/v1/users/join")
                         .contentType(MediaType.APPLICATION_JSON)
